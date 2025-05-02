@@ -7,8 +7,7 @@ import { CalendarDays, Home, Settings, BarChart3 } from "lucide-react";
 
 const navigationItems = [
   { name: "Home", href: "/", icon: Home },
-  { name: "Statistics", href: "/statistics", icon: BarChart3 },
-  
+  { name: "Settings", href: "/settings", icon: Settings },
 ];
 
 export function Navigation() {

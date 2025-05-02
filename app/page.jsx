@@ -62,8 +62,8 @@ export default function Home() {
       
       const result = await response.json();
       
-      setPeriodData(result.entry);
-      setFormOpen(false);
+      setPeriodData(result.entry); // update the state with the new or updated entry
+      setFormOpen(false); // Close the dialog after saving
       toast.success('Period information saved successfully!');
     } catch (error) {
       console.error('Error saving period data:', error);
@@ -90,7 +90,7 @@ export default function Home() {
             <div className="flex flex-col items-center justify-center p-8 bg-muted/40 rounded-lg border border-dashed">
               <h2 className="text-xl font-medium mb-2">Welcome to Period Tracker</h2>
               <p className="text-muted-foreground text-center mb-6 max-w-md">
-                Let get started by entering information about your cycle. This helps us provide accurate predictions.
+                Lets get started by entering information about your cycle. This helps us provide accurate predictions.
               </p>
               <Button onClick={() => setFormOpen(true)}>Set Up Your Cycle</Button>
             </div>
@@ -100,7 +100,6 @@ export default function Home() {
                 periodEntry={periodData} 
                 onEdit={() => setFormOpen(true)}
               />
-              <PeriodStatistics periodEntry={periodData} />
             </div>
           )}
 
