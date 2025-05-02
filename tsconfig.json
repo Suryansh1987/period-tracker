@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/period/days/route.js", "app/api/period/route.js", "app/calendar/page.jsx", "components/period-form.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/period/days/route.js", "app/api/period/route.js", "app/calendar/page.jsx", "components/period-form.jsx", "components/period-calendar.jsx", "components/navigation.jsx", "components/period-card.jsx", "components/period-stats.jsx", "components/theme-provider.jsx", "app/settings/page.jsx", "app/statistics/page.jsx", "app/page.jsx"],
   "exclude": ["node_modules"]
 }

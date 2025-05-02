@@ -4,17 +4,12 @@ import { format, addDays, isBefore, isSameDay, isWithinInterval } from "date-fns
 import { CalendarIcon, CalendarDays, Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { PeriodEntry, PeriodStats } from "@/types";
 import { calculatePeriodStats } from "@/lib/utils/period-calculations";
 
-interface PeriodCardProps {
-  periodEntry: PeriodEntry;
-  onEdit?: () => void;
-}
-
-export function PeriodCard({ periodEntry, onEdit }: PeriodCardProps) {
+export function PeriodCard({ periodEntry, onEdit }) {
   const stats = calculatePeriodStats(periodEntry);
   const today = new Date();
+
   const isPeriodActive = isWithinInterval(today, {
     start: new Date(periodEntry.lastPeriodDate),
     end: addDays(new Date(periodEntry.lastPeriodDate), periodEntry.periodDuration - 1)
@@ -25,8 +20,7 @@ export function PeriodCard({ periodEntry, onEdit }: PeriodCardProps) {
 
   const isUpcoming = isBefore(today, stats.nextPeriodPrediction);
   const isPast = isBefore(stats.periodEndPrediction, today);
-  
-  // Calculate days until next period or days left in current period
+
   let daysMessage = "";
   if (isPeriodActive) {
     const remainingDays = Math.ceil((stats.periodEndPrediction.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
@@ -38,15 +32,15 @@ export function PeriodCard({ periodEntry, onEdit }: PeriodCardProps) {
 
   return (
     <Card className={cn(
-      "overflow-hidden transition-all", 
+      "overflow-hidden transition-all",
       isPeriodActive ? "border-pink-400 dark:border-pink-600" : ""
     )}>
       <CardHeader className={cn(
-        "pb-2", 
-        isPeriodActive 
-          ? "bg-pink-50 dark:bg-pink-900/20" 
-          : isUpcoming 
-            ? "bg-blue-50 dark:bg-blue-900/20" 
+        "pb-2",
+        isPeriodActive
+          ? "bg-pink-50 dark:bg-pink-900/20"
+          : isUpcoming
+            ? "bg-blue-50 dark:bg-blue-900/20"
             : "bg-gray-50 dark:bg-gray-800/50"
       )}>
         <div className="flex justify-between items-center">
@@ -90,9 +84,9 @@ export function PeriodCard({ periodEntry, onEdit }: PeriodCardProps) {
 
           {daysMessage && (
             <div className={cn(
-              "flex items-center p-3 rounded-md text-sm", 
-              isPeriodActive 
-                ? "bg-pink-50 text-pink-800 dark:bg-pink-900/20 dark:text-pink-300" 
+              "flex items-center p-3 rounded-md text-sm",
+              isPeriodActive
+                ? "bg-pink-50 text-pink-800 dark:bg-pink-900/20 dark:text-pink-300"
                 : "bg-blue-50 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300"
             )}>
               <Clock className="h-4 w-4 mr-2" />
@@ -128,8 +122,8 @@ export function PeriodCard({ periodEntry, onEdit }: PeriodCardProps) {
               <p className="text-sm text-muted-foreground">Medical Conditions</p>
               <div className="flex flex-wrap gap-1">
                 {periodEntry.conditions.map(condition => (
-                  <span 
-                    key={condition} 
+                  <span
+                    key={condition}
                     className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200"
                   >
                     {condition.replace('_', ' ')}
@@ -145,6 +139,6 @@ export function PeriodCard({ periodEntry, onEdit }: PeriodCardProps) {
 }
 
 // Helper function for conditional classes
-function cn(...classes: (string | boolean | undefined)[]) {
+function cn(...classes) {
   return classes.filter(Boolean).join(" ");
 }

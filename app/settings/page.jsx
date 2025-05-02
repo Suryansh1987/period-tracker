@@ -6,10 +6,9 @@ import { Button } from "@/components/ui/button";
 import { PeriodForm } from "@/components/period-form";
 import { toast } from "sonner";
 import { DUMMY_USER_ID } from "@/lib/constants";
-import type { PeriodEntry } from "@/types";
 
 export default function SettingsPage() {
-  const [periodData, setPeriodData] = useState<PeriodEntry | null>(null);
+  const [periodData, setPeriodData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // Fetch period data
@@ -42,7 +41,7 @@ export default function SettingsPage() {
     fetchPeriodData();
   }, []);
 
-  const handleFormSubmit = async (data: any) => {
+  const handleFormSubmit = async (data) => {
     try {
       const response = await fetch('/api/period', {
         method: periodData ? 'PUT' : 'POST',

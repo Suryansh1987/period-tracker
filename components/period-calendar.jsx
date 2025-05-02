@@ -4,19 +4,14 @@ import { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PeriodEntry } from "@/types";
 import { isDateInPeriod, getCycleDay } from "@/lib/utils/period-calculations";
 import { addMonths, format, isSameDay, startOfMonth } from "date-fns";
 
-interface PeriodCalendarProps {
-  periodEntry?: PeriodEntry;
-}
+export function PeriodCalendar({ periodEntry }) {
+  const [date, setDate] = useState(new Date());
+  const [view, setView] = useState("month");
 
-export function PeriodCalendar({ periodEntry }: PeriodCalendarProps) {
-  const [date, setDate] = useState<Date>(new Date());
-  const [view, setView] = useState<"month" | "3month" | "6month">("month");
-
-  const generateDateClassNames = (date: Date) => {
+  const generateDateClassNames = (date) => {
     if (!periodEntry) return "";
 
     const isInPeriod = isDateInPeriod(date, periodEntry);
@@ -29,29 +24,28 @@ export function PeriodCalendar({ periodEntry }: PeriodCalendarProps) {
     if (isInPeriod) {
       classNames.push("bg-pink-100 text-pink-900 hover:bg-pink-200 dark:bg-pink-900/40 dark:text-pink-100 dark:hover:bg-pink-800/60");
     }
-    
-    // Fertility window is usually 5 days before ovulation (cycle day 14 in a 28-day cycle) and 1 day after
+
     const isOvulationDay = cycleDay === Math.floor(periodEntry.cycleLength / 2);
     const isFertileDay = cycleDay >= Math.floor(periodEntry.cycleLength / 2) - 5 && 
                          cycleDay <= Math.floor(periodEntry.cycleLength / 2) + 1 &&
                          !isInPeriod;
-    
+
     if (isOvulationDay) {
       classNames.push("!bg-blue-200 !text-blue-900 hover:!bg-blue-300 dark:!bg-blue-800/60 dark:!text-blue-100 dark:hover:!bg-blue-700/60");
-      classNames.push("ovulation-day"); // Custom class for styling
+      classNames.push("ovulation-day");
     } else if (isFertileDay) {
       classNames.push("!bg-blue-50 !text-blue-900 hover:!bg-blue-100 dark:!bg-blue-900/30 dark:!text-blue-100 dark:hover:!bg-blue-800/40");
     }
-    
+
     if (isToday) {
       classNames.push("border-2 border-primary");
     }
-    
+
     return classNames.join(" ");
   };
 
   const renderCalendars = () => {
-    let calendars = [];
+    const calendars = [];
     const numberOfMonths = view === "month" ? 1 : view === "3month" ? 3 : 6;
     
     for (let i = 0; i < numberOfMonths; i++) {
@@ -69,8 +63,7 @@ export function PeriodCalendar({ periodEntry }: PeriodCalendarProps) {
               today: "bg-primary text-primary-foreground",
             }}
             modifiers={{
-              // Custom modifier for styling specific days
-              custom: date => {
+              custom: (date) => {
                 if (!periodEntry) return false;
                 return isDateInPeriod(date, periodEntry) || 
                        getCycleDay(date, periodEntry) === Math.floor(periodEntry.cycleLength / 2);
@@ -78,16 +71,14 @@ export function PeriodCalendar({ periodEntry }: PeriodCalendarProps) {
             }}
             styles={{
               day: (date) => {
-                return { 
-                  className: generateDateClassNames(date) 
-                };
+                return { className: generateDateClassNames(date) };
               }
             }}
           />
         </div>
       );
     }
-    
+
     return calendars;
   };
 
@@ -98,7 +89,7 @@ export function PeriodCalendar({ periodEntry }: PeriodCalendarProps) {
         <CardDescription>
           View your period cycles and predictions for the coming months
         </CardDescription>
-        <Tabs defaultValue="month" value={view} onValueChange={(v) => setView(v as "month" | "3month" | "6month")}>
+        <Tabs defaultValue="month" value={view} onValueChange={(v) => setView(v)}>
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="month">1 Month</TabsTrigger>
             <TabsTrigger value="3month">3 Months</TabsTrigger>

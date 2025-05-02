@@ -9,10 +9,9 @@ import { PeriodStatistics } from "@/components/period-stats";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { DUMMY_USER_ID } from "@/lib/constants";
-import type { PeriodEntry } from "@/types";
 
 export default function Home() {
-  const [periodData, setPeriodData] = useState<PeriodEntry | null>(null);
+  const [periodData, setPeriodData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [formOpen, setFormOpen] = useState(false);
 
@@ -46,7 +45,7 @@ export default function Home() {
     fetchPeriodData();
   }, []);
 
-  const handleFormSubmit = async (data: any) => {
+  const handleFormSubmit = async (data) => {
     try {
       const response = await fetch('/api/period', {
         method: periodData ? 'PUT' : 'POST',
