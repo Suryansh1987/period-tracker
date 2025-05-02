@@ -62,8 +62,8 @@ export default function Home() {
       
       const result = await response.json();
       
-      setPeriodData(result.entry); // update the state with the new or updated entry
-      setFormOpen(false); // Close the dialog after saving
+      setPeriodData(result.entry);
+      setFormOpen(false);
       toast.success('Period information saved successfully!');
     } catch (error) {
       console.error('Error saving period data:', error);
