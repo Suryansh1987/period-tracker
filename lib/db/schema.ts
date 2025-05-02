@@ -36,25 +36,5 @@ export const periodEntries = pgTable('period_entries', {
 
 
 
-export const periodDays = pgTable('period_days', {
-  id: serial('id').primaryKey(),
-  userId: varchar('user_id', { length: 255 }).notNull(),
-  date: date('date').notNull(),
-  flow: integer('flow').default(2), 
-  symptoms: text('symptoms').array(),
-  notes: text('notes'),
-  createdAt: timestamp('created_at').defaultNow(),
-  updatedAt: timestamp('updated_at').defaultNow()
-});
 
 
-export const uniquePeriodDay = pgTable(
-  'unique_period_day',
-  {
-    userId: varchar('user_id', { length: 255 }).notNull(),
-    date: date('date').notNull(),
-  },
-  (table) => ({
-    pk: primaryKey({ columns: [table.userId, table.date] }),
-  })
-);
