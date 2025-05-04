@@ -49,6 +49,9 @@ Toasts: sonner
 
 Mock User: DUMMY_USER_ID for development/testing
 
+
+
+
 📁 Project Structure (Important Files)
 sql
 Copy
@@ -66,6 +69,10 @@ lib/
 bash
 Copy
 Edit
+
+
+
+
 git clone https://github.com/your-username/period-tracker.git
 cd period-tracker
 npm install
