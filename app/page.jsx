@@ -105,7 +105,7 @@ export default function Home() {
         <div className="flex flex-col items-center justify-center p-8 bg-muted/40 rounded-lg border border-dashed">
           <h2 className="text-xl font-medium mb-2">Welcome to Period Tracker</h2>
           <p className="text-muted-foreground text-center mb-6 max-w-md">
-            Let's get started by entering information about your cycle. This helps us provide accurate predictions.
+            Lets get started by entering information about your cycle. This helps us provide accurate predictions.
           </p>
           <Button onClick={() => {
             setSelectedEntry(null);
