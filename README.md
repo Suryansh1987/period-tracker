@@ -49,31 +49,3 @@ Toasts: sonner
 
 Mock User: DUMMY_USER_ID for development/testing
 
-
-
-
-📁 Project Structure (Important Files)
-sql
-Copy
-Edit
-components/
-  ├── period-form.tsx         // Form to create/update period entry
-  ├── period-card.tsx         // Displays period entry in card format
-  ├── period-stats.tsx        // (Optional) Show statistics
-pages/
-  ├── index.tsx               // Home/Dashboard
-  ├── settings.tsx            // Settings page to manage all entries
-lib/
-  ├── constants.ts            // Contains DUMMY_USER_ID or other constants
-🔧 How to Run Locally
-bash
-Copy
-Edit
-
-
-
-
-git clone https://github.com/your-username/period-tracker.git
-cd period-tracker
-npm install
-npm run dev
