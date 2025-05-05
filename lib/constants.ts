@@ -71,4 +71,4 @@ export const SYMPTOMS: SymptomOption[] = [
   { value: "other", label: "Other", category: "other" }
 ];
 
-export const DUMMY_USER_ID = "user-123"; // For demonstration purposes only
+export const DUMMY_USER_ID = "user-123";

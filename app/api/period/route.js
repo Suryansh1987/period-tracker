@@ -4,7 +4,7 @@ import { periodEntries } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { DUMMY_USER_ID } from '@/lib/constants';
 
-// ✅ POST Method – Create a new period entry
+
 export async function POST(request) {
   try {
     const body = await request.json();
@@ -32,12 +32,12 @@ export async function POST(request) {
 
     return NextResponse.json({ entry: entry[0] });
   } catch (error) {
-    console.error('❌ Error creating period entry:', error);
+    console.error(' Error creating period entry:', error);
     return NextResponse.json({ error: 'Failed to create period entry' }, { status: 500 });
   }
 }
 
-// ✅ PUT Method – Update an existing period entry
+
 export async function PUT(request) {
   try {
     const body = await request.json();
@@ -68,7 +68,7 @@ export async function PUT(request) {
     const updateResult = await db
       .update(periodEntries)
       .set({
-        lastPeriodDate: parsedDate, // NO .toISOString() — let Drizzle handle it
+        lastPeriodDate: parsedDate, 
         cycleLength: typeof cycleLength === 'number' ? cycleLength : 28,
         periodDuration: typeof periodDuration === 'number' ? periodDuration : 5,
         conditions: Array.isArray(conditions) ? conditions : [],
@@ -89,7 +89,7 @@ export async function PUT(request) {
 }
 
 
-// ✅ GET Method – Fetch all entries for the user
+
 export async function GET(request) {
   try {
     const userId = request.headers.get('X-User-Id') || DUMMY_USER_ID;

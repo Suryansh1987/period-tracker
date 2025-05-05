@@ -46,7 +46,7 @@ import {
 
 const formSchema = z.object({
   lastPeriodDate: z.date({
-    required_error: "Please select the date of your last period.",
+    required_error: "Please pick the date your last period started.",
   }),
   cycleLength: z.coerce
     .number()
@@ -82,10 +82,10 @@ export function PeriodForm({ initialData, onSubmit }) {
     setIsSubmitting(true);
     try {
       await onSubmit(values);
-      toast.success("Period information saved successfully!");
+      toast.success("Your info has been saved 💾");
     } catch (error) {
-      console.error("Error saving period information:", error);
-      toast.error("Failed to save period information. Please try again.");
+      console.error("Error saving period info:", error);
+      toast.error("Something went wrong — please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -100,7 +100,7 @@ export function PeriodForm({ initialData, onSubmit }) {
             name="lastPeriodDate"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Last Period Start Date</FormLabel>
+                <FormLabel>When did your last period start?</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -111,7 +111,7 @@ export function PeriodForm({ initialData, onSubmit }) {
                           !field.value && "text-muted-foreground"
                         )}
                       >
-                        {field.value ? format(field.value, "PPP") : "Pick a date"}
+                        {field.value ? format(field.value, "PPP") : "Choose a date"}
                         <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                       </Button>
                     </FormControl>
@@ -126,7 +126,7 @@ export function PeriodForm({ initialData, onSubmit }) {
                     />
                   </PopoverContent>
                 </Popover>
-                <FormDescription>The first day of your most recent period.</FormDescription>
+                <FormDescription>This helps us calculate your cycle and predictions.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -138,14 +138,16 @@ export function PeriodForm({ initialData, onSubmit }) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  Cycle Length (Days)
+                  How long is your cycle?
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Info className="h-4 w-4 ml-1 inline opacity-70" />
                       </TooltipTrigger>
                       <TooltipContent>
-                        <p>This is the number of days from the first day of your period to the next.</p>
+                        <p>
+                          Count the number of days from the first day of one period to the day before the next one starts.
+                        </p>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
@@ -154,7 +156,7 @@ export function PeriodForm({ initialData, onSubmit }) {
                   <Input type="number" {...field} />
                 </FormControl>
                 <FormDescription>
-                  Usually around 28 days, but can be {MIN_CYCLE_LENGTH}–{MAX_CYCLE_LENGTH}.
+                  Usually around 28 days, but can range from {MIN_CYCLE_LENGTH} to {MAX_CYCLE_LENGTH}.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -167,12 +169,12 @@ export function PeriodForm({ initialData, onSubmit }) {
           name="periodDuration"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Period Duration (Days)</FormLabel>
+              <FormLabel>How many days does your period last?</FormLabel>
               <FormControl>
                 <Input type="number" {...field} />
               </FormControl>
               <FormDescription>
-                Typically {MIN_PERIOD_DURATION}–{MAX_PERIOD_DURATION} days.
+                Most people bleed for {MIN_PERIOD_DURATION}–{MAX_PERIOD_DURATION} days.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -185,8 +187,8 @@ export function PeriodForm({ initialData, onSubmit }) {
           render={() => (
             <FormItem>
               <div className="mb-4">
-                <FormLabel>Medical Conditions (Optional)</FormLabel>
-                <FormDescription>Select any relevant conditions.</FormDescription>
+                <FormLabel>Do you have any known conditions?</FormLabel>
+                <FormDescription>Choose anything that applies. You can skip this if none apply.</FormDescription>
               </div>
               <div className="grid gap-2 md:grid-cols-2">
                 {PERIOD_CONDITIONS.map((condition) => (
@@ -236,22 +238,22 @@ export function PeriodForm({ initialData, onSubmit }) {
           name="notes"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Notes (Optional)</FormLabel>
+              <FormLabel>Anything else you'd like to add?</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Add any relevant notes..."
+                  placeholder="Optional: symptoms, mood, irregularities, etc."
                   className="resize-none"
                   {...field}
                 />
               </FormControl>
-              <FormDescription>Optional additional info about your cycle.</FormDescription>
+              <FormDescription>Use this space for personal notes about your cycle.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
 
         <Button type="submit" disabled={isSubmitting} className="w-full md:w-auto">
-          {isSubmitting ? "Saving..." : "Save Period Information"}
+          {isSubmitting ? "Saving..." : "Save My Cycle Info"}
         </Button>
       </form>
     </Form>
